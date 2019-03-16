@@ -1,0 +1,109 @@
+from Tkinter import *
+import tkMessageBox
+
+from FitoGeolocation import *
+from FitoWebData import *
+from FitoSendData import *
+from FitoWeather import *
+
+class FitoSmart(Frame):
+
+   
+    def getWebData(self):
+        myWebData = FitoWebData();
+        
+        myMsg = myWebData.getWebData();
+        tkMessageBox.showinfo("FitoSmart - WebData", myMsg)
+
+    def getGeolocation(self):
+        myGeolocation = FitoGeolocation();
+        
+        myMsg = myGeolocation.getGeolocation();
+        tkMessageBox.showinfo("FitoSmart - Geolocation", myMsg)
+
+
+    def getWeather(self):
+        myWeather = FitoWeather();
+        
+        myMsg = myWeather.getWeather();
+        tkMessageBox.showinfo("FitoSmart - Weather", myMsg)
+
+
+    def sendData(self):
+        myFitoTron = FitoSendData();
+        myMsg = myFitoTron.sendData();
+        tkMessageBox.showinfo("FitoSmart - sendData", myMsg)
+
+    def closeApp(self):
+        #myContext = Context();
+        
+        #myMsg = myContext.getContext();
+        tkMessageBox.showinfo("FitoSmart - getContext", "bye..")
+
+
+    def createWidgets(self):
+
+
+        self.lblCodigo = Label(self)
+        self.lblCodigo["text"] = "Codigo"
+        self.lblCodigo["fg"]   = "red"
+        self.lblCodigo.pack({"side": "left"})
+
+
+        self.txtCodigo = Entry(self)
+        self.txtCodigo["text"] = "------"
+        self.txtCodigo["fg"]   = "red"
+        self.txtCodigo.pack({"side": "left"})
+
+
+        self.btnContext = Button(self)
+        self.btnContext["text"] = "Get Web Data"
+        self.btnContext["fg"]   = "red"
+        self.btnContext["command"] =  self.getWebData
+        self.btnContext.pack({"side": "left"})
+
+        self.btnUpdatePars = Button(self)
+        self.btnUpdatePars["text"] = "Get geolocation"
+        self.btnUpdatePars["fg"]   = "blue"
+        self.btnUpdatePars["command"] =  self.getGeolocation
+        self.btnUpdatePars.pack({"side": "left"})
+
+
+        self.btnUpdatePars = Button(self)
+        self.btnUpdatePars["text"] = "Get weather"
+        self.btnUpdatePars["fg"]   = "blue"
+        self.btnUpdatePars["command"] =  self.getWeather
+        self.btnUpdatePars.pack({"side": "left"})
+
+
+        self.btnUpdatePars = Button(self)
+        self.btnUpdatePars["text"] = "Update Parameters"
+        self.btnUpdatePars["fg"]   = "blue"
+        self.btnUpdatePars["command"] =  self.quit
+        self.btnUpdatePars.pack({"side": "left"})
+
+
+        self.btnSendData = Button(self)
+        self.btnSendData["text"] = "Start Sensing"
+        self.btnSendData["command"] = self.sendData
+        self.btnSendData.pack({"side": "left"})
+
+
+
+        self.quit = Button(self)
+        self.quit["text"] = "Exit",
+        self.quit["command"] = self.closeApp
+        self.quit.pack({"side": "left"})
+
+
+    def __init__(self, master=None):
+        Frame.__init__(self, master)
+        self.pack()
+        self.createWidgets()
+
+root = Tk()
+app = FitoSmart(master=root)
+app.master.title("FitoSmart - Computo Sensible al Contexto")
+
+app.mainloop()
+root.destroy()
